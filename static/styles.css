@@ -29,7 +29,7 @@ html { font-family: "Inter", sans-serif; }
 	--create-card-space: calc(80px - 1rem - 5px);/* half of inner card dimension - 1rem - half of plus size from html >>> check final result*/
 
 	/*--card-title-size:;*/
-	--card-title-weight: bold;
+	--card-title-weight: 700;
 }
 
 
@@ -82,7 +82,7 @@ h2 {
 
 .card_alt_title {
 	font-size: 3rem;
-	font-weight: 500;
+	font-weight: 600;
 	margin: 0px;
 }
 
@@ -94,13 +94,19 @@ h2 {
 }
 
 .zoom {
-	border-radius: var(--outer-card-radius);
 	border-width: var(--border-width);
-	color: #836BB7;
+	border-color: rgb(15, 68, 167);
+	border-style: solid;
+}
+
+.zoom:hover {
+	background-image: linear-gradient(150deg, rgb(15, 68, 167) -151.1%, rgb(101, 194, 207) -51.1%, rgb(15, 68, 167) 48.9%);
+	border-width: 0.2px;
+	-webkit-text-fill-color: transparent;
+	-webkit-background-clip: text;
 }
 
 .gmeet {
-
 }
 
 
