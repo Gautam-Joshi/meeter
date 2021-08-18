@@ -16,21 +16,25 @@
 		    <div class="card_alt gmeet">
 		    {% endif %}
 				<p class="card_alt_title">At {{meeting["time"]}}</p>
-				{% if meeting["subject"] is not none %}
-				{% if meeting["teacher"] is not none %}
-				<p class="card_alt_text"><b>{{meeting["subject"]}}</b> &#8226; {{meeting["teacher"]}}</p>
-				{% else %}
-				<p class="card_alt_text"><b>{{meeting["subject"]}}</b></p>
-				{% endif %}
-				{% else %}
-				<p class="card_alt_text"></b>{{meeting["teacher"]}}</b></p>
-				{% endif %}
-				{% if meeting["type"] == 0 %}
-				<p class="card_alt_text">MID: {{meeting["mid"]}}</p>
-				<p class="card_alt_text">Passcode: {{meeting["passcode"]}}</p>
-				{% else %}
-				<p class="card_alt_text">{{meeting["gmeet_code"]}}</p>
-				{% endif %}
+
+				<p class="card_alt_text">
+					{% if meeting["subject"] is not none %}
+					<b>{{meeting["subject"]}}</b>
+						{% if meeting["teacher"] is not none %}
+						 &#8226; {{meeting["teacher"]}}
+						{% endif %}
+					<br>
+					{% else %}
+					<b>{{meeting["teacher"]}}<br></b>
+					{% endif %}
+					{% if meeting["type"] == 0 %}
+					MID:&nbsp;{{meeting["mid"]}}
+					<br>Passcode:&nbsp;{{meeting["passcode"]}}
+					{% else %}
+					Code:&nbsp;{{meeting["gmeet_code"]}}
+					{% endif %}
+				</p>
+
 				<a href="{{meeting["link"]}}">
 					<p class="card_alt_text link">Go now <img class="upright" src="/static/svg/arrow.up.forward.svg"></p>
 				</a>
