@@ -41,7 +41,8 @@ h2 {
 	font-weight: 600;
 	letter-spacing: -0.040em;
 }
- body {
+
+body {
  	font-size: 17px;
     line-height: 1.47059;
     font-weight: 400;
@@ -52,7 +53,15 @@ h2 {
 	font-family: "Inter", "Inter var", sans-serif;
 }
 
+a {
+	color: #0068d1;
+	text-decoration: none;
+}
 
+a:hover {
+	color: #147ce5;
+	text-decoration: none;
+}
 
 
 
@@ -94,6 +103,9 @@ h2 {
 }
 
 
+
+/* Meeting Card Rules */
+
 .zoom {
 	background: #cad9e5;
 }
@@ -114,6 +126,20 @@ h2 {
 	-webkit-background-clip: text;
 }
 
+.upright {
+	max-height: 0.8rem;
+	margin: 0.1rem 0px 0px 0px;
+	color: #0068d1;
+	fill: #0068d1;
+}
+
+.upright {
+}
+
+.upright:hover {
+	color: #147ce5;
+	fill: #147ce5;
+}
 
 
 
@@ -149,15 +175,6 @@ h2 {
 	margin-top: var(--create-card-space);
 	margin-bottom: 4px;
 }
-.link-cover {
-	position:absolute;
-	width: var(--outer-card-width);
-	height: var(--outer-card-height);
-	z-index: 5;
-	border-radius: 18px;
-}
-
-
 
 
 
@@ -167,12 +184,4 @@ h2 {
 	display: flex;
 	align-items: flex-start;
 	overflow-x: auto;
-}
-
-
-
-.link > .upright {
-	max-height: 0.6rem;
-	margin: 0.1rem 0px 0px 0px;
-	color: inherit;
 }
