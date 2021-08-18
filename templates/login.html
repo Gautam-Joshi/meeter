@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block body %}
+
+    <div class="section">
+        <h2>sup?</h2>
+        <form action="/login" method="post">
+            <input autocomplete="off" autofocus name="username" placeholder="Username" type="text">
+            <input name="password" placeholder="Password" type="password">
+            <button class="btn btn-primary" type="submit">lemme in</button>
+        </form>
+    </div>
+{% endblock %}

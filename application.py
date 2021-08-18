@@ -1,5 +1,7 @@
 import os
+
 import re
+import time
 
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
@@ -37,30 +39,133 @@ db = SQL("sqlite:///meetings.db")
 
 #!comes after @login_required
 
-@app.route("/", methods=["GET", "POST"])
-def index():
+@app.route("/add", methods=["GET", "POST"])
+@login_required
+def add():
     """Welcome here!"""
     if request.method == "GET":
-        return render_template("index.html")
+        return render_template("add.html")
 
     if request.method == "POST":
 
-        text = str(request.form.get("message"))
-        print(text)
+        text = request.form.get("message")
 
-        invites = re.split("\[.*\].*\n", text)
+        invites = re.split("\[.*\]\s?\w+\s?\w+\s?\W\s", text)
 
         for meeting in invites:
+            #Split returns first and last strings as ""
             if meeting == "":
                 continue
 
+            #Call our regex helper to give a dict for current meeting
             data = extract(meeting)
+
+            #Check if no invite
+            try:
+                test = data["time"]
+                del test
+            except:
+                continue
+
+            # Check for date presence
+            try:
+                test = data["date"]
+                del test
+            except:
+                #Set date based on user input
+                if request.form.get("date_preference") == "0":
+                    data["date"] = int(time.strftime("%d"))
+                else:
+                    data["date"] = int(time.strftime("%d")) + 1
+
+            #Use % 7 to set unique day id
+            if int(data["date"]) < 7:
+                data["date"] = int(data["date"]) + 7
+            day = int(data["date"]) % 7
+
+            #Find meeting type
+            if data["type"] == "zoom":
+                #meet type 0 for zoom
+                meet_type = 0
+            else:
+                #meet type 1 for gmeet
+                meet_type = 1
+
+            #Maintenence
+            #Delete old inactive meetings of same day
+            db.execute("DELETE FROM meetings WHERE day IN (?) AND active IN (?)", day, "0")
+
+            #Set meetings of days except today and tomorrow as inactive
+            if day == 6:
+                day1 = 6
+                day2 = 0
+            else:
+                day1 = day
+                day2 = day1 + 1
+            db.execute("UPDATE meetings SET active = (?) WHERE day NOT IN (?, ?)", "0", day1, day2)
+            del day1
+            del day2
+            #Maintenence Done
+
+            #Add common data to meetings
+            db.execute("INSERT INTO meetings (user_session, link, time, day, type, active) VALUES (?, ?, ?, ?, ?, ?)", session["user_id"], data["link"], data["time"], day, meet_type, "1")
+            print("Action: Meeting Added")
+
+            #Get meeting id of currently added meeting to do case based data addition
+            meeting = db.execute("SELECT meeting_id FROM meetings WHERE day IN (?) AND user_session IN (?) AND time IN (?) AND link IN (?)", day, session["user_id"], data["time"], data["link"])
+            print("Action: Meeting Accessed")
+
+            #Add subject if present
+            try:
+                db.execute("UPDATE meetings SET subject = (?) WHERE meeting_id = (?)", data["subject"], meeting[0]["meeting_id"])
+                print("Action: Subject Added")
+            except:
+                pass
+            #Add teacher if present
+            try:
+                db.execute("UPDATE meetings SET teacher = (?) WHERE meeting_id = (?)", data["teacher"], meeting[0]["meeting_id"])
+                print("Action: Teacher Added")
+            except:
+                pass
+
+            if meet_type == 0:
+                #Add MID and passcode for zoom
+                db.execute("UPDATE meetings SET mid = (?), passcode = (?) WHERE meeting_id IN (?)", data["id"], data["password"], meeting[0]["meeting_id"])
+                print("Action: MID/Pass - Zoom")
+            else:
+                #Add meet code for gmeet
+                db.execute("UPDATE meetings SET gmeet_code = (?) WHERE meeting_id IN (?)", data["code"], meeting[0]["meeting_id"])
+                print("Action: Gmeet Code Added")
 
             for element in data:
                 print(data[element])
             print("\n")
 
         return redirect("/")
+
+@app.route("/")
+@login_required
+def index():
+    day = int(time.strftime("%d"))
+
+    if day < 7:
+        day = day + 7
+
+    day = day % 7
+
+    #If meetings are there
+    my_meetings = db.execute("SELECT * FROM meetings WHERE user_session IN (?) AND day IN (?) AND active IN (?) ORDER BY time", session["user_id"], day, "1")
+
+    if len(my_meetings) > 0:
+        return render_template("index.html", meetings = my_meetings)
+
+    #If suggested meetings are there
+    suggestions = db.execute("SELECT * FROM meetings WHERE user_session IN (?) AND day IN (?) AND active IN (?)", session["user_id"], day, "0")
+
+    if len(suggestions) > 0:
+        return render_template("index.html", suggestions = suggestions)
+
+    return render_template("index.html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -137,7 +242,7 @@ def register():
 
         pwhash = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
 
-        db.execute("INSERT INTO users (username, hash, cash) VALUES (?, ?, ?)", username, pwhash, "10000")
+        db.execute("INSERT INTO users (username, hash) VALUES (?, ?)", username, pwhash)
 
     return redirect("/login")
 

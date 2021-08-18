@@ -42,7 +42,10 @@ def extract(meeting):
 
     try:
         time = re.findall("[\s\W](\d\d?)[\.\:](\d\d)", meeting)[0]
-        data["time"] = str(time[0]) + ":" + str(time[1])
+        if len(time[0]) == 1:
+            data["time"] = "0" + str(time[0]) + ":" + str(time[1])
+        else:
+            data["time"] = str(time[0]) + ":" + str(time[1])
     except:
         pass
 
@@ -57,9 +60,15 @@ def extract(meeting):
         pass
 
     try:
-        data["subject"] = re.findall("7[Bb]\s([\w\.]*)\s?", meeting)[0]
+        data["subject"] = re.findall("(\w+) Class", meeting, re.IGNORECASE)[0]
     except:
-        pass
+        try:
+            data["subject"] = re.findall("Subject\s?\W?\s(\w*)\s?", meeting)[0]
+        except:
+            try:
+                data["subject"] = re.findall("7[Bb]\s([\w\.]*)\s?", meeting)[0]
+            except:
+                pass
 
     try:
         data["link"] = re.findall("(https:\/\/[us].*)\s\n", meeting)[0]
@@ -70,14 +79,15 @@ def extract(meeting):
         data["type"] = "zoom"
 
         data["id"] = re.findall("(\d{3}\s\d{3}\d?\s\d{3}\d?)", meeting)[0]
-        data["teacher"] = re.findall("Topic:\s?(.*)\'s", meeting)[0]
-        data["password"] = re.findall("Passcode:\s?(.*)\s?\n", meeting)[0]
+        data["teacher"] = re.findall("(\w+\s\w+)\sis inviting", meeting)[0]
+        data["password"] = re.findall("Passcode:\s?(.*)\s?\n?", meeting)[0]
 
     except:
         try:
-            data["link"] = re.findall("(https:\/\/[meet].*)\s?\n", meeting)[0]
+            link = re.findall("(meet\.google.*\/.*)\s?", meeting)[0].strip()
+            data["link"] = "https://" + link
             data["type"] = "gmeet"
-            data["code"] = re.findall("https:\/\/meet.*\/(.*)\s?", meeting)[0]
+            data["code"] = re.findall("meet\.google.*\/(.*)\s?", meeting)[0]
         except:
             print("Skipping invite, no link found")
 

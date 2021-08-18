@@ -1,0 +1,13 @@
+what if user adds meetings again?
+box based on min/max data
+styles
+float animation on hover
+    box-shadow: 2px 4px 16px rgba(0, 0, 0, .16);
+    transform:scale3d(1.01, 1.01, 1.01)
+
+std values
+    box-shadow: 2px 4px 12px rgba(0, 0, 0, .08);
+    transition:all .3s cubic-bezier(0, 0, .5, 1)
+
+
+cream! : #E8D8CA

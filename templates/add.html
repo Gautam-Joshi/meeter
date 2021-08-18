@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block body %}
+
+    <div class="section">
+        <h2>alpha enter</h2>
+        <form action="/add" method="post">
+            <textarea autofocus name="message" placeholder="Enter"></textarea>
+            <select name="date_preference">
+                <option selected value="1">Tomorrow</option>
+                <option value="0">Today</option>
+            </select>
+            <button class="btn btn-primary" type="submit">Get it?</button>
+        </form>
+    </div>
+{% endblock %}

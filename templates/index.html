@@ -4,13 +4,63 @@
     Home
 {% endblock %}
 
-{% block main %}
-
+{% block body %}
     <div class="section">
-        <h2>alpha</h2>
-        <form action="/" method="post">
-            <textarea autofocus name="message" placeholder="Enter"></textarea>
-            <button class="btn btn-primary" type="submit">Get it?</button>
-        </form>
+        <h2>Welcome home!</h2>
+        <div class="fullwidth meetings">
+		    {% if meetings is not none %}
+		    {% for meeting in meetings %}
+		    {% if meeting["type"] == 0 %}
+		    <div class="card_alt zoom">
+		    {% else %}
+		    <div class="card_alt gmeet">
+		    {% endif %}
+				<p class="card_alt_title">At {{meeting["time"]}}</p>
+				{% if meeting["subject"] is not none %}
+				{% if meeting["teacher"] is not none %}
+				<p class="card_alt_text"><b>{{meeting["subject"]}}</b> &#8226; {{meeting["teacher"]}}</p>
+				{% else %}
+				<p class="card_alt_text"><b>{{meeting["subject"]}}</b></p>
+				{% endif %}
+				{% else %}
+				<p class="card_alt_text"></b>{{meeting["teacher"]}}</b></p>
+				{% endif %}
+				{% if meeting["type"] == 0 %}
+				<p class="card_alt_text">MID: {{meeting["mid"]}}</p>
+				<p class="card_alt_text">Passcode: {{meeting["passcode"]}}</p>
+				{% else %}
+				<p class="card_alt_text">{{meeting["gmeet_code"]}}</p>
+				{% endif %}
+				<a href="{{meeting["link"]}}">
+					<p class="card_alt_text link">Go now <img class="upright" src="/static/svg/arrow.up.forward.svg"></p>
+				</a>
+    		</div>
+			{% endfor %}
+			{% endif %}
+    	</div>
+
+        <!-- static block of "add meeting"-->
+        <div class="fullwidth static_add">
+            <div class="margin">
+    		    <div class="card_alt background_card_create">
+    			    <div class="card_alt_inner foreground_card_create">
+    				    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle adjust_plus" viewBox="0 0 16 16">
+    					    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+    					    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+    				    </svg>
+    				    <p class="create_maintext">Add New Meetings</p>
+    			    </div>
+        			<a href="/add">
+        			<span class="link-cover"></span></a>
+    		    </div>
+    		</div>
+    	</div>
+
+        {% if suggestions is defined %}
+        <!-- Dropdown thing - javascript moment -->
+            {% for meeting in suggestions %}
+            <!-- same meeting formula, just with a dropdown thing class -->
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}

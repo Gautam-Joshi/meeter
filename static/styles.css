@@ -1,0 +1,167 @@
+@import url('https://rsms.me/inter/inter.css');
+html { font-family: "Inter", sans-serif; }
+
+@supports (font-variation-settings: normal) {
+  html { font-family: "Inter var", sans-serif; }
+}
+
+
+/* Own Variables */
+:root {
+	--outer-card-height: 180px;
+	--outer-card-width: 300px;
+
+	--inner-card-margin-top: 5px;
+	--inner-card-margin-left: 5px;
+
+	--border-width: 3px;
+
+	/*somehow, on server, chrome manages to reduce dimensions by 4, so add 4px*/
+	/* confirmed: border doesn't affect size on chrome (chad move) */
+	--inner-card-height: 170px;/* outer card dimension -  margin */
+	--inner-card-width: 290px;
+
+	--outer-card-radius: 18px;
+	--inner-card-radius: 14px;
+
+	--card-margin: 12px;
+
+	--create-card-space: calc(80px - 1rem - 5px);/* half of inner card dimension - 1rem - half of plus size from html >>> check final result*/
+
+	/*--card-title-size:;*/
+	--card-title-weight: bold;
+}
+
+
+
+
+
+
+h2 {
+	font-weight: 600;
+	letter-spacing: -0.040em;
+}
+ body {
+ 	font-size: 17px;
+    line-height: 1.47059;
+    font-weight: 400;
+    letter-spacing: -.022em;
+    background-color: #f5f5f7;
+    color: #1d1d1f;
+    font-style:normal;
+	font-family: "Inter", "Inter var", sans-serif;
+}
+
+
+
+
+
+
+/* All card rules */
+.card_alt {
+	border-radius: var(--outer-card-radius);
+	min-width: var(--outer-card-width);
+	min-height: var(--outer-card-height);
+	margin: var(--card-margin);
+	box-shadow: 2px 4px 12px rgba(0, 0, 0, .08);
+	transition:all .3s cubic-bezier(0, 0, .5, 1);
+}
+
+.card_alt:hover {
+	box-shadow: 2px 4px 16px rgba(0, 0, 0, .16);
+	transform:scale3d(1.01, 1.01, 1.01);
+}
+
+.card_alt_inner {
+	position: absolute;
+	margin-left: var(--inner-card-margin-left);
+	margin-top: var(--inner-card-margin-top);
+	min-width: var(--inner-card-width);
+	min-height: var(--inner-card-height);
+}
+
+.card_alt_title {
+	font-size: 3rem;
+	font-weight: 500;
+	margin: 0px;
+}
+
+.card_alt_text {
+	max-width: var(--inner-card-width);
+	font-weight: normal;
+	padding: 0px;
+	margin: 0px;
+}
+
+.zoom {
+	border-radius: var(--outer-card-radius);
+	border-width: var(--border-width);
+	color: #836BB7;
+}
+
+.gmeet {
+
+}
+
+
+
+
+/* "Add meeting" card */
+.background_card_create {
+	background-color: #fff;
+}
+
+.background_card_create:hover {
+	background-color: #836BB7;
+}
+
+.background_card_create:hover > .foreground_card_create {
+	color: #fff;
+}
+
+.foreground_card_create {
+	border-radius: var(--inner-card-radius);
+	border-style: dashed;
+	border-width: var(--border-width);
+	background-color:(0,0,0,0);
+	color: #836BB7;
+	text-align: center;
+}
+
+.create_maintext {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	font-weight: var(--card-title-weight);
+}
+.adjust_plus {
+	font-weight: bold;
+	margin-top: var(--create-card-space);
+	margin-bottom: 4px;
+}
+.link-cover {
+	position:absolute;
+	width: var(--outer-card-width);
+	height: var(--outer-card-height);
+	z-index: 5;
+	border-radius: 18px;
+}
+
+
+
+
+
+/* Testing for full width divs */
+.fullwidth {
+	width: 100%;
+	display: flex;
+	align-items: flex-start;
+	overflow-x: auto;
+}
+
+
+
+.link > .upright {
+	max-height: 0.6rem;
+	margin: 0.1rem 0px 0px 0px;
+	color: inherit;
+}
