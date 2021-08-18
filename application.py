@@ -137,6 +137,7 @@ def add():
                 db.execute("UPDATE meetings SET gmeet_code = (?) WHERE meeting_id IN (?)", data["code"], meeting[0]["meeting_id"])
                 print("Action: Gmeet Code Added")
 
+            db.execute("UPDATE meetings SET subject = NULL WHERE subject = (?)", "")
             for element in data:
                 print(data[element])
             print("\n")
