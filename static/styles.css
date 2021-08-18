@@ -93,15 +93,8 @@ h2 {
 	margin: 0px;
 }
 
-.zoom {
-	border-width: var(--border-width);
-	border-color: rgb(15, 68, 167);
-	border-style: solid;
-}
-
-.zoom:hover {
+.zoom:hover > .card_alt_title {
 	background-image: linear-gradient(150deg, rgb(15, 68, 167) -151.1%, rgb(101, 194, 207) -51.1%, rgb(15, 68, 167) 48.9%);
-	border-width: 0.2px;
 	-webkit-text-fill-color: transparent;
 	-webkit-background-clip: text;
 }
