@@ -173,6 +173,13 @@ a:hover {
 	margin-bottom: 4px;
 }
 
+.link-cover {
+	position:absolute;
+	width: var(--outer-card-width);
+	height: var(--outer-card-height);
+	z-index: 5;
+	border-radius: 18px;
+}
 
 
 /* Testing for full width divs */
