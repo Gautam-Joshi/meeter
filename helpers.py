@@ -79,7 +79,7 @@ def extract(meeting):
         data["type"] = "zoom"
 
         data["id"] = re.findall("(\d{3}\s\d{3}\d?\s\d{3}\d?)", meeting)[0]
-        data["teacher"] = re.findall("(\w+\s\w+)\sis inviting", meeting)[0]
+        data["teacher"] = re.findall("(.*)\sis inviting", meeting)[0]
         data["password"] = re.findall("Passcode:\s?(.*)\s?\n?", meeting)[0]
 
     except:

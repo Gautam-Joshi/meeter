@@ -5,10 +5,27 @@
 {% endblock %}
 
 {% block body %}
-    <form action="/register" method="post">
-        <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
-        <input class="form-control" name="password" placeholder="Password" type="password">
-        <input class="form-control" name="confirmation" placeholder="Confirm Password" type="password">
-        <button class="btn btn-primary" type="submit">Register</button>
-    </form>
+    <link rel="stylesheet" href="/static/login.css">
+    <div class="section">
+        <h2 class="display-1">Meeter</h2>
+        <p class="description">Manage those meeting invites</p>
+        <main class="container p-5">
+        <form action="/register" method="post">
+            <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="password" placeholder="Password" type="password">
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="confirmation" placeholder="Password (again)" type="password">
+            </div>
+            <button class="btn btn-primary" type="submit">Register</button>
+        </form>
+        </main>
+        <a href="/login">
+			<p class="card_alt_text join-button">Or Login <svg class="upright" viewBox="0 0 80 80" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><path d="M60.2051 44.3359L60.2051 6.25C60.2051 2.53912 57.7148 0 53.9551 0L15.8691 0C12.3535 0 9.7168 2.63672 9.7168 5.85937C9.7168 8.98437 12.4512 11.5234 15.8203 11.5234L29.1504 11.5234L41.5039 10.9863L34.7656 16.9434L2.00195 49.7559C0.732422 51.0254 0 52.5879 0 54.1504C0 57.2754 2.88086 60.2051 6.05469 60.2051C7.61719 60.2051 9.13086 59.4727 10.4492 58.2031L43.2617 25.4394L49.2188 18.7012L48.6816 30.9082L48.6816 44.3848C48.6816 47.7539 51.123 50.4394 54.3457 50.4394C57.5684 50.4394 60.2051 47.7539 60.2051 44.3359L60.2051 44.3359Z" id="Shape" fill-rule="evenodd" stroke="none" />
+</svg></p>
+		</a>
+    </div>
 {% endblock %}

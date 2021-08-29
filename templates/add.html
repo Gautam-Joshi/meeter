@@ -5,16 +5,19 @@
 {% endblock %}
 
 {% block body %}
-
+    <link rel="stylesheet" href="/static/add.css"
     <div class="section">
-        <h2>alpha enter</h2>
+        <h2>Add Meetings</h2>
+        <br>
         <form action="/add" method="post">
-            <textarea autofocus name="message" placeholder="Enter"></textarea>
-            <select name="date_preference">
+            <textarea autofocus class="form-control" name="message" placeholder="Paste your invites here!"></textarea>
+            <p>If date not identified, assume invites for:</p>
+            <select class="form-select" name="date_preference">
                 <option selected value="1">Tomorrow</option>
                 <option value="0">Today</option>
             </select>
-            <button class="btn btn-primary" type="submit">Get it?</button>
+            <br>
+            <button class="btn btn-primary" type="submit">Get My Meetings</button>
         </form>
     </div>
 {% endblock %}

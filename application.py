@@ -50,7 +50,7 @@ def add():
 
         text = request.form.get("message")
 
-        invites = re.split("\[.*\]\s?\w+\s?\w+\s?\W\s", text)
+        invites = re.split("\[.*\].*:\s?", text)
 
         for meeting in invites:
             #Split returns first and last strings as ""
@@ -161,7 +161,7 @@ def index():
         return render_template("index.html", meetings = my_meetings)
 
     #If suggested meetings are there
-    suggestions = db.execute("SELECT * FROM meetings WHERE user_session IN (?) AND day IN (?) AND active IN (?)", session["user_id"], day, "0")
+    suggestions = db.execute("SELECT * FROM meetings WHERE user_session IN (?) AND day IN (?) AND active IN (?) ORDER BY time", session["user_id"], day, "0")
 
     if len(suggestions) > 0:
         return render_template("index.html", suggestions = suggestions)

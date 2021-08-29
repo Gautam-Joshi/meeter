@@ -1,0 +1,54 @@
+h2 {
+    font-family:"SFProDisplay";
+    font-weight: bold;
+    letter-spacing: -0.040em;
+    font-size: 60px;
+    text-align: center;
+}
+
+a {
+	color: #0068d1;
+	text-decoration: none;
+}
+a:hover {
+	color: #147ce5;
+	text-decoration: none;
+}
+a > p {
+    margin: 0px 0px 0px 0px;
+}
+
+body {
+    font-size: 17px;
+    line-height: 1.47059;
+    font-weight: bold;
+    letter-spacing: -.022em;
+    background-color: #F4E7E9;
+    font-family:"SFProText";
+    font-style:normal;
+    text-align: center;
+}
+.display-1 {
+  margin-top: calc(40vh - 10rem);
+  font-weight: 500;
+  margin-bottom: -0.5rem;
+
+}
+.upright {
+	max-height: 0.8rem;
+	margin: 0.1rem 0px 0px 0px;
+	color: #0068d1;
+	fill: #0068d1;
+}
+.upright:hover {
+	color: #147ce5;
+	fill: #147ce5;
+}
+main .form-control
+{
+    /* center form controls */
+    display: inline-block;
+
+    /* override Bootstrap's 100% width for form controls */
+    max-width: 212px;
+}

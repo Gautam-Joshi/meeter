@@ -1,11 +1,3 @@
-@import url('https://rsms.me/inter/inter.css');
-html { font-family: "Inter", sans-serif; }
-
-@supports (font-variation-settings: normal) {
-  html { font-family: "Inter var", sans-serif; }
-}
-
-
 /* Own Variables */
 :root {
 	--outer-card-height: 180px;
@@ -27,28 +19,25 @@ html { font-family: "Inter", sans-serif; }
 	--card-margin: 12px;
 
 	--create-card-space: calc(80px - 1rem - 5px);/* half of inner card dimension - 1rem - half of plus size from html >>> check final result*/
-
-	/*--card-title-size:;*/
-	--card-title-weight: 700;
 }
 
 
 /* HTML Tag Selections */
-
 h2 {
-	font-weight: 700;
-	letter-spacing: -0.040em;
-	font-size: 60px;
+	font-family: "Canela-Bold", "Canela Bold", "Canela", "SFProDisplay";
+	font-weight: bold;
+	font-size: 50px;
 }
+
 body {
  	font-size: 17px;
     line-height: 1.47059;
     font-weight: 400;
     letter-spacing: -.022em;
-    background-color: #f5f5f7;
+    background-color: #F4E7E9;
     color: #1d1d1f;
     font-style:normal;
-	font-family: "Inter", "Inter var", sans-serif;
+    margin-left: 20px;
 }
 a {
 	color: #0068d1;
@@ -60,13 +49,13 @@ a:hover {
 }
 
 
-/* Independent Text */
+/* All Text */
 
 
 
 
 /* All card rules */
-
+/* named "card_alt" as to not conflict with bootstrap's card */
 .card_alt {
 	border-radius: var(--outer-card-radius);
 	min-width: var(--outer-card-width);
@@ -87,34 +76,57 @@ a:hover {
 	min-height: var(--inner-card-height);
 }
 .card_alt_title {
+	font-family: "SFProDisplay";
 	font-size: 3rem;
-	font-weight: 700;
+	font-weight: bold;
 	letter-spacing: -0.040em;
 }
 .card_alt_text {
+	font-family:"SFProText";
 	max-width: var(--inner-card-width);
-	font-weight: normal;
+	letter-spacing: -0.05em;
+	font-weight: 300;
 	padding: 0px;
 	margin: 0px 0px 0px 1rem;
 }
+
+.card_alt_text b {
+	font-family:"SFProText";
+	font-weight: bold;
+}
+
+/* Card Carousel Styles */
 .card-carousel {
 	width: 100%;
+	height: calc(0.15 * var(--outer-card-height) + var(--outer-card-height));
 	display: flex;
 	align-items: flex-start;
 	overflow-x: auto;
+	overflow-y: hidden;
+    margin-left: -11px;
+}
+.card-carousel::-webkit-scrollbar {
+  display: none;
 }
 .lt-margin-carousel {
-	margin-left: clamp(15px, 20vw, 500px);
+	/*margin-left: clamp(15px, 20vw, 500px);*/
 }
-.join-button {
-	margin-left: calc(var(--outer-card-width) - 6ch - 0.8rem);
+.suggestions {
+	opacity: 0.95;
 }
-
-
+.carousel-title{
+	font-family: "SFProText";
+	font-weight: 300;
+	padding: 0px;
+	margin: 0px 0px 0px 0px;
+}
+.down-arrow {
+	max-height: 0.8rem;
+	margin: 0rem 0px 0px 0.1rem;
+}
 
 
 /* Meeting Card Rules */
-
 .zoom {
 	background: #cad9e5;
 	border-style: solid;
@@ -151,7 +163,9 @@ a:hover {
 	color: #147ce5;
 	fill: #147ce5;
 }
-
+.join-button {
+	margin-left: calc(var(--outer-card-width) - 6ch - 0.8rem);
+}
 
 
 
@@ -176,7 +190,9 @@ a:hover {
 .create_maintext {
 	margin-top: 0px;
 	margin-bottom: 0px;
-	font-weight: var(--card-title-weight);
+	font-family:"SFProText";
+	letter-spacing: -0.05em;
+	font-weight: bold;
 }
 .adjust_plus {
 	font-weight: bold;
@@ -189,4 +205,20 @@ a:hover {
 	height: var(--outer-card-height);
 	z-index: 5;
 	border-radius: 18px;
+}
+
+.logout-link {
+	float: right;
+}
+
+@media (pointer:none), (pointer:coarse) {
+	.logout-link {
+    	text-align: center;
+		float: none;
+	}
+
+	.logout-link > p {
+		padding-left: 20px;
+		margin-bottom: 2rem;
+	}
 }

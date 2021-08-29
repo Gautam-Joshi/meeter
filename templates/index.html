@@ -5,12 +5,19 @@
 {% endblock %}
 
 {% block body %}
-    <div class="title-margin">
-        <h2>Welcome home!</h2>
-    </div>
+    <link rel="stylesheet" href="/static/styles.css">
+    <h2>Welcome home!</h2>
+    <a class="logout-link" href="/logout">
+		<p class="card_alt_text">Logout <svg class="upright" viewBox="0 0 80 80" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><path d="M60.2051 44.3359L60.2051 6.25C60.2051 2.53912 57.7148 0 53.9551 0L15.8691 0C12.3535 0 9.7168 2.63672 9.7168 5.85937C9.7168 8.98437 12.4512 11.5234 15.8203 11.5234L29.1504 11.5234L41.5039 10.9863L34.7656 16.9434L2.00195 49.7559C0.732422 51.0254 0 52.5879 0 54.1504C0 57.2754 2.88086 60.2051 6.05469 60.2051C7.61719 60.2051 9.13086 59.4727 10.4492 58.2031L43.2617 25.4394L49.2188 18.7012L48.6816 30.9082L48.6816 44.3848C48.6816 47.7539 51.123 50.4394 54.3457 50.4394C57.5684 50.4394 60.2051 47.7539 60.2051 44.3359L60.2051 44.3359Z" id="Shape" fill-rule="evenodd" stroke="none" />
+</svg></p>
+	</a>
     <div class="lt-margin-carousel">
-        <div class="card-carousel meetings">
-		    {% if meetings is not none %}
+	    {% if meetings is defined %}
+	    <p class="carousel-title">My Meetings <svg class="down-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+	    	<path d="M28.76,0a2.87,2.87,0,0,0-3,3V54.79L26,63,15.19,51.12,5,41.11a3.16,3.16,0,0,0-2.15-.83A2.84,2.84,0,0,0,0,43.21a3,3,0,0,0,.93,2.15L26.51,71A3,3,0,0,0,31,71L56.59,45.36a3,3,0,0,0,.93-2.15,2.84,2.84,0,0,0-2.88-2.93,3.07,3.07,0,0,0-2.15.83l-10.16,10L31.49,62.94l.25-8.15V3A2.87,2.87,0,0,0,28.76,0Z"/>
+</svg>
+	    </p>
+        <div class="card-carousel">
 		    {% for meeting in meetings %}
 		    {% if meeting["type"] == 0 %}
 		    <div class="card_alt zoom">
@@ -33,10 +40,10 @@
 					<br>
 					{% endif %}
 					{% if meeting["type"] == 0 %}
-					MID:&nbsp;{{meeting["mid"]}}
-					<br>Passcode:&nbsp;{{meeting["passcode"]}}
+					MID:&nbsp;<b>{{meeting["mid"]}}</b>
+					<br>Passcode:&nbsp;<b>{{meeting["passcode"]}}</b>
 					{% else %}
-					Code:&nbsp;{{meeting["gmeet_code"]}}<br><br>
+					Code:&nbsp;<b>{{meeting["gmeet_code"]}}</b><br><br>
 					{% endif %}
 				</p>
 
@@ -47,31 +54,64 @@
 				</a>
     		</div>
 			{% endfor %}
-			{% endif %}
     	</div>
+		{% endif %}
 
-        <!-- static block of "add meeting"-->
-        <div class="card-carousel static_add">
-            <div class="margin">
-    		    <div class="card_alt background_card_create">
-    			    <div class="card_alt_inner foreground_card_create">
-    				    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle adjust_plus" viewBox="0 0 16 16">
-    					    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-    					    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-    				    </svg>
-    				    <p class="create_maintext">Add New Meetings</p>
-    			    </div>
-        			<a href="/add">
-        			<span class="link-cover"></span></a>
-    		    </div>
+	    {% if suggestions is defined %}
+	    <p class="carousel-title">Suggestions - From Last Week</p>
+        <div class="card-carousel suggestions">
+		    {% for suggestion in suggestions %}
+		    {% if suggestion["type"] == 0 %}
+		    <div class="card_alt zoom">
+		    {% else %}
+		    <div class="card_alt gmeet">
+		    {% endif %}
+				<p class="card_alt_title">At&nbsp;{{suggestion["time"]}}</p>
+
+				<p class="card_alt_text">
+					{% if suggestion["subject"] is not none %}
+					<b>{{suggestion["subject"]}}</b>
+						{% if suggestion["teacher"] is not none %}
+						 &#8226; {{suggestion["teacher"]}}
+						{% endif %}
+					<br>
+					{% else %}
+					{% if suggestion["teacher"] is not none %}
+					<b>{{suggestion["teacher"]}}</b>
+					{% endif %}
+					<br>
+					{% endif %}
+					{% if suggestion["type"] == 0 %}
+					MID:&nbsp;{{suggestion["mid"]}}
+					<br>Passcode:&nbsp;{{suggestion["passcode"]}}
+					{% else %}
+					Code:&nbsp;{{suggestion["gmeet_code"]}}<br><br>
+					{% endif %}
+				</p>
+
+				<a href="{{suggestion["link"]}}">
+					<p class="card_alt_text join-button">Join <svg class="upright" viewBox="0 0 80 80" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <path d="M60.2051 44.3359L60.2051 6.25C60.2051 2.53912 57.7148 0 53.9551 0L15.8691 0C12.3535 0 9.7168 2.63672 9.7168 5.85937C9.7168 8.98437 12.4512 11.5234 15.8203 11.5234L29.1504 11.5234L41.5039 10.9863L34.7656 16.9434L2.00195 49.7559C0.732422 51.0254 0 52.5879 0 54.1504C0 57.2754 2.88086 60.2051 6.05469 60.2051C7.61719 60.2051 9.13086 59.4727 10.4492 58.2031L43.2617 25.4394L49.2188 18.7012L48.6816 30.9082L48.6816 44.3848C48.6816 47.7539 51.123 50.4394 54.3457 50.4394C57.5684 50.4394 60.2051 47.7539 60.2051 44.3359L60.2051 44.3359Z" id="Shape" fill-rule="evenodd" stroke="none" />
+</svg></p>
+				</a>
     		</div>
+			{% endfor %}
     	</div>
+		{% endif %}
 
-        {% if suggestions is defined %}
-        <!-- Dropdown thing - javascript moment -->
-            {% for meeting in suggestions %}
-            <!-- same meeting formula, just with a dropdown thing class -->
-            {% endfor %}
-        {% endif %}
+		<!-- static block of "add meeting"-->
+        <div class="card-carousel static_add">
+		    <div class="card_alt background_card_create">
+			    <div class="card_alt_inner foreground_card_create">
+				    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle adjust_plus" viewBox="0 0 16 16">
+					    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+					    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+				    </svg>
+				    <p class="create_maintext">Add New Meetings</p>
+			    </div>
+    			<a href="/add">
+    			<span class="link-cover"></span></a>
+		    </div>
+    	</div>
     </div>
 {% endblock %}
