@@ -1,4 +1,5 @@
 import os
+import time
 import re
 import requests
 import urllib.parse
@@ -93,3 +94,13 @@ def extract(meeting):
 
     return data
 
+def get_day():
+    """Gets day value, added here for non repetition"""
+    day = int(time.strftime("%d"))
+
+    if day < 7:
+        day = day + 7
+
+    day = day % 7
+
+    return day

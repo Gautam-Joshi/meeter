@@ -7,19 +7,14 @@ h2 {
 }
 
 a {
-	color: #0068d1;
-	text-decoration: none;
-}
-a:hover {
-	color: #147ce5;
+	color: #ff3b30;
 	text-decoration: none;
 }
 a > p {
-    margin: 0px 0px 0px 0px;
+    margin: 0px 0px 3rem 0px;
 }
 
 body {
-    text-align: center;
     font-size: 17px;
     line-height: 1.47059;
     font-weight: bold;

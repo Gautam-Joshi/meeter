@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit
+{% endblock %}
+
+{% block body %}
+    <link rel="stylesheet" href="/static/edit.css">
+	<h2>Edit Meetings</h2>
+	<form action="/edit" method="post">
+		    {% for meeting in meetings %}
+			<div class="form-group">
+				<label class="form-label">Time</label>
+				<input autocomplete="off" class="form-control" name="{{"time" ~ meeting["meeting_id"]}}" placeholder="{{meeting["time"]}}" type="text">
+			</div>
+
+			<div class="form-group">
+				<label class="form-label">Subject</label>
+				<input autocomplete="off" class="form-control" name="{{"subject" ~ meeting["meeting_id"]}}" placeholder="{{meeting["subject"]}}" type="text">
+			</div>
+
+			<div class="form-group">
+				<label class="form-label">Teacher</label>
+				<input autocomplete="off" class="form-control" name="{{"teacher" ~ meeting["meeting_id"]}}" placeholder="{{meeting["teacher"]}}" type="text">
+			</div>
+
+
+				{% if meeting["type"] == 0 %}
+
+			<div class="form-group">
+				<label class="form-label">Meeting ID</label>
+				<input autocomplete="off" class="form-control" name="{{"mid" ~ meeting["meeting_id"]}}" placeholder="{{meeting["mid"]}}" type="text">
+			</div>
+
+			<div class="form-group">
+				<label class="form-label">Passcode</label>
+				<input autocomplete="off" class="form-control" name="{{"passcode" ~ meeting["meeting_id"]}}" placeholder="{{meeting["passcode"]}}" type="text">
+			</div>
+
+				{% else %}
+
+			<div class="form-group">
+				<label class="form-label">Code</label>
+				<input autocomplete="off" class="form-control" name="{{"gmeet_code" ~ meeting["meeting_id"]}}" placeholder="{{meeting["gmeet_code"]}}" type="text">
+			</div>
+
+				{% endif %}
+
+			<div class="form-group">
+				<label class="form-label">Link</label>
+				<input autocomplete="off" class="form-control" name="{{"link" ~ meeting["meeting_id"]}}" placeholder="{{meeting["link"]}}" type="text">
+			</div>
+
+			<a href={{"/remove?meeting_id=" ~ meeting["meeting_id"]}} method="post">
+				<button type="button" class="btn btn-danger spacer">Remove Meeting</button>
+			</a>
+				
+			
+			<!-- separator for next meeting -->
+			{% endfor %}
+			<button class="btn btn-primary" type="submit">Done</button>
+	</form>
+{% endblock %}

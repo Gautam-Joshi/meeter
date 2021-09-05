@@ -10,7 +10,7 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import extract, login_required, apology
+from helpers import extract, login_required, apology, get_day
 from math import modf
 
 # Configure application
@@ -144,15 +144,63 @@ def add():
 
         return redirect("/")
 
+@app.route("/edit", methods=["GET","POST"])
+@login_required
+def edit():
+    
+    if request.method=="GET":
+        day = get_day()
+
+        my_meetings = db.execute("SELECT * FROM meetings WHERE user_session IN (?) AND day IN (?) AND active IN (?) ORDER BY time", session["user_id"], day, "1")
+
+        return render_template("edit.html", meetings = my_meetings)
+
+    if request.method=="POST":
+
+        day = get_day()
+
+        my_meetings = db.execute("SELECT * FROM meetings WHERE user_session IN (?) AND day IN (?) AND active IN (?)", session["user_id"], day, "1")
+
+        for meeting in my_meetings:
+
+            #Update Time if changed
+            if request.form.get("time" + str(meeting["meeting_id"])):
+                db.execute("UPDATE meetings SET time = (?) WHERE meeting_id IN (?)", request.form.get("time" + str(meeting["meeting_id"])), meeting["meeting_id"])
+
+            #Update Subject if changed
+            if request.form.get("subject" + str(meeting["meeting_id"])):
+                db.execute("UPDATE meetings SET subject = (?) WHERE meeting_id IN (?)", request.form.get("subject" + str(meeting["meeting_id"])), meeting["meeting_id"])
+
+            #Update Teacher if changed
+            if request.form.get("teacher" + str(meeting["meeting_id"])):
+                db.execute("UPDATE meetings SET teacher = (?) WHERE meeting_id IN (?)", request.form.get("teacher" + str(meeting["meeting_id"])), meeting["meeting_id"])
+
+            #Update Link if changed
+            if request.form.get("link" + str(meeting["meeting_id"])):
+                db.execute("UPDATE meetings SET link = (?) WHERE meeting_id IN (?)", request.form.get("link" + str(meeting["meeting_id"])), meeting["meeting_id"])
+
+            if meeting["type"] == "0":
+                #zoom
+                
+                #Update MID if changed
+                if request.form.get("mid" + str(meeting["meeting_id"])):
+                    db.execute("UPDATE meetings SET mid = (?) WHERE meeting_id IN (?)", request.form.get("mid" + str(meeting["meeting_id"])), meeting["meeting_id"])
+
+                #Update Passcode if changed
+                if request.form.get("passcode" + str(meeting["meeting_id"])):
+                    db.execute("UPDATE meetings SET passcode = (?) WHERE meeting_id IN (?)", request.form.get("passcode" + str(meeting["meeting_id"])), meeting["meeting_id"])
+            else:
+                #gmeet
+
+                #Update gmeet_code if changed
+                if request.form.get("gmeet_code" + str(meeting["meeting_id"])):
+                    db.execute("UPDATE meetings SET gmeet_code = (?) WHERE meeting_id IN (?)", request.form.get("gmeet_code" + str(meeting["meeting_id"])), meeting["meeting_id"])
+        return redirect("/")
+
 @app.route("/")
 @login_required
 def index():
-    day = int(time.strftime("%d"))
-
-    if day < 7:
-        day = day + 7
-
-    day = day % 7
+    day = get_day()
 
     #If meetings are there
     my_meetings = db.execute("SELECT * FROM meetings WHERE user_session IN (?) AND day IN (?) AND active IN (?) ORDER BY time", session["user_id"], day, "1")
@@ -167,6 +215,13 @@ def index():
         return render_template("index.html", suggestions = suggestions)
 
     return render_template("index.html")
+
+@app.route("/remove")
+def remove():
+
+    db.execute("DELETE FROM meetings WHERE meeting_id IN (?)", request.args.get("meeting_id"))
+
+    return redirect("/")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
