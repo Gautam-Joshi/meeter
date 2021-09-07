@@ -93,7 +93,7 @@ def add():
 
             #Maintenence
             #Delete old inactive meetings of same day
-            db.execute("DELETE FROM meetings WHERE day IN (?) AND active IN (?)", day, "0")
+            db.execute("DELETE FROM meetings WHERE day IN (?) AND active IN (?) AND user_session IN (?)", day, "0", session["user_id"])
 
             #Set meetings of days except today and tomorrow as inactive
             if day == 6:
@@ -221,7 +221,7 @@ def remove():
 
     db.execute("DELETE FROM meetings WHERE meeting_id IN (?)", request.args.get("meeting_id"))
 
-    return redirect("/")
+    return redirect("/edit")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
