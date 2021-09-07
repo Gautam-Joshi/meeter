@@ -4,11 +4,11 @@
 
 #### Description:
 
-##About
+## About
 
 Meeter is a flask based web application that can help you manage meeting invites for school.
 
-##Working
+## Working
 
 Meeter uses regex to split, identify and categorise meeting invites from input text.
 
@@ -22,15 +22,15 @@ To use, follow these steps:
 
 The cards are themed - green for Google Meet links, and blue for Zoom links. The cards will also display GMeet Code for Google Meet, and Meeting ID + Passcode for Zoom.
 
-##Additional Features
+## Additional Features
 
-###Edit
+### Edit
 
 After you have added your Meetings, you can tap on edit to access the edit page. Here you can edit the meeting data like time, subject, teacher name etc. in case they couldn’t be identified.
 
 You can also delete messages from herein.
 
-###**Suggestions**
+### **Suggestions**
 
 Meeter intelligently remembers your meetings from last week. Thus, if you log in after a week, instead of being greeted by a blank pages, you’ll see all the cards you saw last week on the same way.
 
